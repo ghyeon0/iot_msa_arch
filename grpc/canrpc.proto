@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "main";
+
+message CAN {
+	string id = 1;
+	bytes contents = 2;	
+}
+
+service CANRPCService {
+    rpc SendCAN (SendCANArgs) returns (CAN) {}
+    rpc ReadCAN (ReadCANArgs) returns (CAN) {}
+}
+
+message SendCANArgs {
+	string id = 1;
+	bytes contents = 2;
+}
+
+message ReadCANArgs {
+    string id = 1;
+}
