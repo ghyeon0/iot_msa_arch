@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""Inception v3 architecture 모델을 retraining한 모델을 이용해서 이미지에 대한 추론(inference)을 진행하는 예제"""
-
 import numpy as np
 import tensorflow as tf
 import time
