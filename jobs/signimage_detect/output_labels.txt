@@ -1,0 +1,9 @@
+ahead left
+ahead right
+go ahead
+left turn
+pass left
+pass right
+right turn
+round about
+wild life
