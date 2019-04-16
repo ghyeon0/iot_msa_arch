@@ -3,6 +3,7 @@ import tensorflow as tf
 import time
 import os
 import random
+import sys
 
 
 # imagePath = '/tmp/pass_left.jpg'                                      # 추론을 진행할 이미지 경로
@@ -10,7 +11,11 @@ modelFullPath = './signimages.pb'                                      # 읽어�
 labelsFullPath = './output_labels.txt'                                   # 읽어들일 labels 파일 경로
 
 sign_images = []
-BASE_PATH = '/home/ghyeon/SignImages/signimages_photos'
+try:
+    BASE_PATH = sys.argv[1]
+except:
+    BASE_PATH = input("Input Image File Path: ")
+
 for path in os.listdir(BASE_PATH):
     for f in os.listdir(BASE_PATH + "/" + path):
         sign_images.append(BASE_PATH + "/" + path + "/" + f)
