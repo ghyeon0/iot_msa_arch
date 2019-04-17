@@ -27,9 +27,9 @@ $ make build-server
 $ make run-server
 ```
 
-5.  run client
+5.  run test-client
 ```
-$ make build-client
-$ make run-client SERVER_IP=(YOUR SERVER IP) 
+$ make build-test-client
+$ make run-test-client SERVER_IP=(YOUR SERVER IP) 
 
 ```
