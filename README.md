@@ -21,8 +21,15 @@ ref) https://docs.docker.com/install/linux/docker-ce/ubuntu/
 ```
 
 ```
-4.  run client
+4. run server
 ```
+$ make build-server
+$ make run-server
+```
+
+5.  run client
+```
+$ make build-client
 $ make run-client SERVER_IP=(YOUR SERVER IP) 
 
 ```
