@@ -1,5 +1,6 @@
 import canrpc_pb2 as pb
 import canrpc_pb2_grpc as rpcservice
+from j1 import inference_test as inf
 import grpc
 import sys
 import os
@@ -30,3 +31,4 @@ if __name__ == "__main__":
     )
     print("got id: %s, contents = %s" %
           (can_clone.id, can_clone.contents.decode()))
+    inf.run_inference_on_image()
