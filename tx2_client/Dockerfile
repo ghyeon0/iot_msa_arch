@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install --upgrade \
   pip \
   setuptools \
-  https://github.com/frankgu968/installTensorFlowTX2/raw/master/whl/tensorflow-1.5.0-cp35-cp35m-linux_aarch64.whl
+  https://github.com/peterlee0127/tensorflow-nvJetson/releases/download/binary/tensorflow-1.9.0-cp35-cp35m-linux_aarch64.whl
 
 RUN rm -rf /var/cuda-repo-9-0-local/*.deb
 RUN rm -rf /usr/local/cuda-9.0/doc/*
