@@ -4,7 +4,9 @@ import time
 import os
 import random
 import sys
-
+import canrpc_pb2 as pb
+import canrpc_pb2_grpc as rpcservice
+import grpc
 
 def init_datas():
     global modelFullPath, labelsFullPath, sign_images
@@ -42,6 +44,16 @@ def run_inference_on_image():
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
 
+
+    server_ip = os.getenv('SERVER_IP')
+    
+    if server_ip is None:
+        print('server ip not defined')
+        sys.exit(1)
+	
+    channel = grpc.insecure_channel(server_ip+':6000')
+    client = rpcservice.CANRPCServiceStub(channel)
+
     with tf.Session() as sess:
         total = 0.0
         softmax_tensor = sess.graph.get_tensor_by_name('InceptionV1/Logits/Predictions/Softmax:0')
@@ -65,7 +77,24 @@ def run_inference_on_image():
             # answer = labels[top_k[0]]
             end = time.time()
             total += end - start
-            print(end - start)
+            print("\nSEND\n")
+            can = client.SendCAN(
+                    pb.SendCANArgs(
+                    contents=bytes(labels[top_k].encode()),
+                )
+            )
+            print("can created with id: %s" % can.id)
+
+            print("\nREAD\n")
+            can_clone = client.ReadCAN(
+                pb.ReadCANArgs(
+                    id=can.id,
+                )
+            )
+            
+            print("got id: %s, contents = %s" %
+                   (can_clone.id, can_clone.contents.decode()))
+            # print(end - start)
         print(total / 10000)
         return answer
 
