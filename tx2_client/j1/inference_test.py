@@ -29,7 +29,7 @@ def get_random_photo():
     global sign_images
     return sign_images[random.randint(0, len(sign_images) - 1)]
 
-def run_inference_on_image():
+def run_inference_on_image(server_ip, channel):
     global modelFullPath, labelsFullPath, sign_images
     answer = None
 
@@ -44,14 +44,7 @@ def run_inference_on_image():
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
 
-
-    server_ip = os.getenv('SERVER_IP')
-    
-    if server_ip is None:
-        print('server ip not defined')
-        sys.exit(1)
-	
-    channel = grpc.insecure_channel(server_ip+':6000')
+    # channel = grpc.insecure_channel(server_ip+':6000')
     client = rpcservice.CANRPCServiceStub(channel)
 
     with tf.Session() as sess:

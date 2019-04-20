@@ -31,4 +31,4 @@ if __name__ == "__main__":
     )
     print("got id: %s, contents = %s" %
           (can_clone.id, can_clone.contents.decode()))
-    inf.run_inference_on_image()
+    inf.run_inference_on_image(server_ip, channel)
