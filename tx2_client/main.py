@@ -1,7 +1,7 @@
 import sys
 from optparse import OptionParser
 import os
-from j1.traffic_sign_recognition import Job1 as Job1
+from j1.traffic_sign_recognition import Job1
 
 
 if __name__ == "__main__":
