@@ -4,7 +4,9 @@ import time
 import os
 import random
 import sys
-
+import canrpc_pb2 as pb
+import canrpc_pb2_grpc as rpcservice
+import grpc
 
 def init_datas():
     global modelFullPath, labelsFullPath, sign_images
@@ -27,7 +29,7 @@ def get_random_photo():
     global sign_images
     return sign_images[random.randint(0, len(sign_images) - 1)]
 
-def run_inference_on_image():
+def run_inference_on_image(server_ip, channel):
     global modelFullPath, labelsFullPath, sign_images
     answer = None
 
@@ -41,6 +43,9 @@ def run_inference_on_image():
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
+
+    # channel = grpc.insecure_channel(server_ip+':6000')
+    client = rpcservice.CANRPCServiceStub(channel)
 
     with tf.Session() as sess:
         total = 0.0
@@ -65,7 +70,24 @@ def run_inference_on_image():
             # answer = labels[top_k[0]]
             end = time.time()
             total += end - start
-            print(end - start)
+            print("\nSEND\n")
+            can = client.SendCAN(
+                    pb.SendCANArgs(
+                    contents=bytes(labels[top_k].encode()),
+                )
+            )
+            print("can created with id: %s" % can.id)
+
+            print("\nREAD\n")
+            can_clone = client.ReadCAN(
+                pb.ReadCANArgs(
+                    id=can.id,
+                )
+            )
+            
+            print("got id: %s, contents = %s" %
+                   (can_clone.id, can_clone.contents.decode()))
+            # print(end - start)
         print(total / 10000)
         return answer
 

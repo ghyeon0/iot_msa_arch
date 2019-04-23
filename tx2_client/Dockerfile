@@ -4,13 +4,13 @@ RUN apt-get update && apt-get install -y \
   python3-pip \ 
   python3-dev \
   python3-numpy \
-  python3-wheel 
+  python3-wheel \
+  vim
 
 RUN pip3 install --upgrade \
   pip \
   setuptools \
-  https://github.com/frankgu968/installTensorFlowTX2/raw/master/whl/tensorflow-1.5.0-cp35-cp35m-linux_aarch64.whl
-
+  http://developer.download.nvidia.com/compute/redist/jp33/tensorflow-gpu/tensorflow_gpu-1.9.0+nv18.8-cp35-cp35m-linux_aarch64.whl
 RUN rm -rf /var/cuda-repo-9-0-local/*.deb
 RUN rm -rf /usr/local/cuda-9.0/doc/*
 RUN rm -rf /root/src/jetsonhacks
