@@ -165,7 +165,4 @@ class Job2:
 
         capture.release()
         # cv2.destoryAllWindows()        
-
-if __name__ == "__main__":
-    j2 = Job2("172.17.0.2")
-    j2.main()
+        
