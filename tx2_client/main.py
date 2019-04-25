@@ -2,6 +2,7 @@ import sys
 from optparse import OptionParser
 import os
 from j1.traffic_sign_recognition import Job1
+from j2.line_detection import Job2
 
 
 if __name__ == "__main__":
@@ -19,4 +20,7 @@ if __name__ == "__main__":
     print(options.job)
     if options.job == "1":
         job = Job1(server_ip, options.input_directory)
+        job.main()
+    elif options.job == "2":
+        job = Job2(server_ip)
         job.main()
