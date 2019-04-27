@@ -85,11 +85,10 @@ class Job2:
         while (capture.isOpened()):
             # image = cv2.imread('slope_test.jpg') # 이미지 읽기
             ret, image = capture.read()
-            try:
-                height, width = image.shape[:2] # 이미지 높이, 너비
-            except AttributeError:
-                capture = cv2.VideoCapture('challenge.mp4')
+            if not ret or image is None:
+                capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 continue
+            height, width = image.shape[:2] # 이미지 높이, 너비
             gray_img = self.grayscale(image) # 흑백이미지로 변환
             blur_img = self.gaussian_blur(gray_img, 3) # Blur 효과
             canny_img = self.canny(blur_img, 70, 210) # Canny edge 알고리즘
